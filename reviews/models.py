@@ -1,6 +1,8 @@
 from django.db import models
 import uuid
 from django.utils.text import slugify
+from django.conf import settings
+
 
 # Create your models here.
 # Сущность 1: Абстрактная модель аудита (TimeStampedModel)
@@ -46,7 +48,42 @@ class Review(TimeStampedModel):
     slug = models.SlugField(max_length = 255, unique = True, allow_unicode = True)
     content = models.TextField()
     is_published = models.BooleanField(default = True)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete = models.CASCADE, 
+        related_name = 'reviews', 
+        verbose_name = 'Автор'
+        )
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
+    
+
+
+
+# 2.1. Модификация слоя данных (reviews/models.py)
+
+# Откройте файл моделей вашего бизнес-приложения reviews. 
+# Необходимо добавить связь между обзором и его автором.
+
+# Импорт настроек: Добавьте импорт глобального объекта настроек Django. 
+# Прямой импорт системной модели User категорически запрещен архитектурными стандартами.
+
+# Добавление реляционного поля: В модель Review добавьте новое поле author (или reviewer). 
+# Тип поля — внешний ключ (ForeignKey).
+
+# Конфигурация поля:
+
+# Укажите в качестве целевой модели строковую константу, 
+# хранящуюся в настройках Django (указатель на актуальную модель пользователя).
+
+# Задайте стратегию каскадного удаления (on_delete): при удалении 
+# аккаунта пользователя все написанные им обзоры должны автоматически удаляться из базы данных.
+
+# Обязательно определите атрибут related_name (например, reviews).
+#  Это имя будет использоваться ядром ORM для создания обратного менеджера у объекта пользователя.
+
+# Добавьте человекочитаемое имя для поля (verbose_name).
+
