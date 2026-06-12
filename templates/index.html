@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная — GameCritic | База данных геймеров{% endblock title %}
+
+{% block content %}
+<div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 flex items-center justify-center min-h-[calc(100vh-8rem)]">
+    <!-- Welcome Card/Banner -->
+    <div class="w-full max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl p-8 sm:p-12 shadow-2xl text-center relative overflow-hidden">
+        <!-- Visual glow effect detail -->
+        <div class="absolute -top-40 -left-40 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="relative z-10">
+            <!-- Icon/Badge placeholder -->
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-6">
+                <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+            </div>
+
+            <!-- Styled Title -->
+            <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-6">
+                Добро пожаловать в <br class="sm:hidden">
+                <span class="text-transparent bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text">базу данных геймеров</span>
+            </h1>
+
+            <!-- Project Description -->
+            <p class="text-zinc-400 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+                GameCritic — это веб-платформа для публикации честных пользовательских обзоров на видеоигры, ведения геймерских дневников, отслеживания прогресса и прохождения ваших любимых игровых тайтлов. Присоединяйтесь к нашему растущему сообществу!
+            </p>
+
+            <!-- CTA Actions -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-bold px-8 py-3.5 rounded-xl text-sm transition-colors duration-200 shadow-lg shadow-emerald-500/10">
+                    Начать писать обзоры
+                </a>
+                <a href="#" class="w-full sm:w-auto bg-zinc-800 hover:bg-zinc-700 text-white font-bold px-8 py-3.5 rounded-xl text-sm border border-zinc-700 transition-colors duration-200">
+                    Узнать больше
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
