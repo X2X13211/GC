@@ -23,6 +23,9 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
+        indexes = [
+            models.Index(fields = ['author', 'created_at'])
+        ]
 
 
 
@@ -60,6 +63,10 @@ class Review(TimeStampedModel):
             self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
     
+
+
+
+
 
 
 
