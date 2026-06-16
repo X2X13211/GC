@@ -3,20 +3,6 @@ import uuid
 from django.utils.text import slugify
 from django.conf import settings
 
-
-# Create your models here.
-# Сущность 1: Абстрактная модель аудита (TimeStampedModel)
-
-# Создайте класс TimeStampedModel, наследуемый от базового класса моделей Django (models.Model).
-
-# Поля:
-
-# Дата создания (created_at): Дата и время создания записи. Настройте поле так, чтобы оно автоматически фиксировало время только в момент создания объекта.
-
-# Дата изменения (updated_at): Дата и время изменения записи. Настройте поле так, чтобы оно автоматически обновлялось при каждом сохранении объекта в БД.
-
-# Архитектурное ограничение: Данный класс является вспомогательным и не должен создавать физическую таблицу в базе данных. Опишите мета-параметры класса так, чтобы Django ORM понимал его как абстрактный.
-
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
