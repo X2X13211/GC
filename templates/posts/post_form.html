@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_edit %}Редактировать пост{% else %}Новый пост{% endif %} — GameCritic{% endblock title %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-10">
+
+    <div class="bg-zinc-900 rounded-2xl shadow-lg border border-zinc-800 p-6 md:p-10">
+
+        <h1 class="text-2xl font-bold text-zinc-100 mb-8">
+            {% if is_edit %}✏️ Редактировать пост{% else %}📝 Новый пост{% endif %}
+        </h1>
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="bg-red-900/40 text-red-400 p-4 text-sm rounded-xl border border-red-800">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <!-- Обложка -->
+            <div>
+                <label for="{{ form.cover_image.id_for_label }}" class="block text-sm font-semibold text-zinc-300 mb-2">
+                    {{ form.cover_image.label }}
+                </label>
+                <div class="mb-3 hidden" id="preview_container">
+                    <img id="image-preview" src="" alt="Preview" class="h-48 object-cover rounded-xl border border-zinc-700 shadow-sm">
+                </div>
+                {{ form.cover_image }}
+                {% if form.cover_image.errors %}
+                <p class="text-red-400 text-xs mt-1">{{ form.cover_image.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Заголовок -->
+            <div>
+                <label for="{{ form.title.id_for_label }}" class="block text-sm font-semibold text-zinc-300 mb-2">
+                    {{ form.title.label }}
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                <p class="text-red-400 text-xs mt-1">{{ form.title.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Контент -->
+            <div>
+                <label for="{{ form.content.id_for_label }}" class="block text-sm font-semibold text-zinc-300 mb-2">
+                    {{ form.content.label }}
+                </label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                <p class="text-red-400 text-xs mt-1">{{ form.content.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Опубликовать -->
+            <div class="flex items-center gap-3">
+                {{ form.is_published }}
+                <label for="{{ form.is_published.id_for_label }}" class="text-sm text-zinc-400 cursor-pointer">
+                    Опубликовать пост
+                </label>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="flex items-center gap-4 pt-2">
+                <button type="submit" 
+                        class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-sm">
+                    {% if is_edit %}Сохранить изменения{% else %}Опубликовать{% endif %}
+                </button>
+                <a href="{% url 'posts:post_list' %}" 
+                   class="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-medium rounded-xl transition-all duration-200">
+                    Отмена
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.getElementById('image-upload-input');
+    const previewContainer = document.getElementById('preview_container');
+    const imagePreview = document.getElementById('image-preview');
+
+    if (imageInput) {
+        imageInput.addEventListener('change', function(event) {
+            if (event.target.files && event.target.files[0]) {
+                const file = event.target.files[0];
+                const objectURL = URL.createObjectURL(file);
+                imagePreview.src = objectURL;
+                previewContainer.classList.remove('hidden');
+            } else {
+                previewContainer.classList.add('hidden');
+            }
+        });
+    }
+});
+</script>
+{% endblock content %}

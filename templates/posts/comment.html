@@ -1,0 +1,56 @@
+<!-- СЕКЦИЯ КОММЕНТАРИЕВ -->
+<div class="mt-10 bg-zinc-900 rounded-2xl shadow-lg border border-zinc-800 p-6 md:p-8">
+
+    <h3 class="text-xl font-bold text-zinc-100 mb-6">
+        💬 Комментарии
+        <span class="ml-2 text-sm font-normal text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded-full">{{ comments.count }}</span>
+    </h3>
+
+    {% if user.is_authenticated %}
+    <form method="POST" class="mb-8">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.body }}
+        </div>
+        <div class="flex justify-end">
+            <button type="submit" 
+                    class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-200 shadow-sm">
+                Отправить
+            </button>
+        </div>
+    </form>
+    {% else %}
+    <div class="bg-zinc-800 border border-zinc-700 rounded-xl p-6 text-center mb-8">
+        <p class="text-zinc-400 mb-4">Только авторизованные пользователи могут оставлять комментарии.</p>
+        <a href="{% url 'users:login' %}?next={{ request.path }}" 
+           class="inline-block bg-emerald-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-emerald-500 transition-colors duration-200">
+            Войти
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- ЛЕНТА КОММЕНТАРИЕВ -->
+    <div class="space-y-5">
+        {% for comment in comments %}
+        <div class="flex gap-4">
+            <!-- Аватарка (первая буква имени) -->
+            <div class="w-10 h-10 shrink-0 rounded-full bg-emerald-900 border border-emerald-700 flex items-center justify-center font-bold text-emerald-400 uppercase text-sm">
+                {{ comment.author.username|make_list|first }}
+            </div>
+
+            <div class="flex-1 bg-zinc-800 p-4 rounded-2xl rounded-tl-none border border-zinc-700">
+                <div class="flex justify-between items-center mb-2">
+                    <a href="{% url 'users:profile' comment.author.username %}" 
+                       class="font-bold text-zinc-200 hover:text-emerald-400 transition-colors duration-200 text-sm">
+                        {{ comment.author.username }}
+                    </a>
+                    <span class="text-xs text-zinc-500">{{ comment.created_at|date:"d M Y, H:i" }}</span>
+                </div>
+                <p class="text-zinc-300 text-sm leading-relaxed whitespace-pre-line">{{ comment.body|linebreaksbr }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-zinc-500 text-center italic py-6">Пока нет ни одного комментария. Будьте первым! 🎮</p>
+        {% endfor %}
+    </div>
+</div>

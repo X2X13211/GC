@@ -14,12 +14,30 @@
                 <a href="#" class="text-sm font-semibold text-zinc-300 hover:text-emerald-400 transition-colors duration-200">Топ игр</a>
                 <a href="#" class="text-sm font-semibold text-zinc-300 hover:text-emerald-400 transition-colors duration-200">Авторы</a>
             </nav>
-
-            <!-- Authentication Button -->
-            <div class="flex items-center">
-                <a href="#" class="bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-bold px-4 py-2 rounded-lg text-sm transition-colors duration-200 shadow-md shadow-emerald-500/10">
-                    Войти / Регистрация
+            
+            <div class="flex items-center space-x-4"> 
+                {% if user.is_authenticated %}
+                <a href="{% url 'posts:create' %}" class="hidden sm:inline-flex items-center text-sm font-semibold text-slate-300 hover:text-white transition-colors">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Написать статью
                 </a>
+                <div class="flex-items-center space-x-3 pl-4 border-1 bprder-slate-700"> 
+                    <span class="text-sm font-medium text-slate-200">{{ user.username }}</span>
+
+                    <form action="{% url 'users:logout' %}" method="POST" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors">Выйти</button>
+                    </form>
+                    <a href="{% url 'users:profile_edit' % } class='text-xs text-slate-400 hover:text-white transition-colors">Войти</a>
+                    
+                </div>
+                {% else %}
+                <div class="flex items-center">
+                    <a href="#" class="bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-bold px-4 py-2 rounded-lg text-sm transition-colors duration-200 shadow-md shadow-emerald-500/10">
+                        Войти / Регистрация
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

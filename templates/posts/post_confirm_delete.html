@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Удалить пост — GameCritic{% endblock title %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-20">
+    <div class="bg-zinc-900 rounded-2xl border border-zinc-800 p-8 text-center">
+
+        <div class="text-5xl mb-4">🗑️</div>
+        <h1 class="text-2xl font-bold text-zinc-100 mb-3">Удалить пост?</h1>
+        <p class="text-zinc-400 mb-2">Вы уверены, что хотите удалить пост:</p>
+        <p class="text-emerald-400 font-semibold mb-8">«{{ post.title }}»</p>
+        <p class="text-sm text-zinc-500 mb-8">Это действие необратимо. Все комментарии и лайки также будут удалены.</p>
+
+        <form method="POST" class="flex items-center justify-center gap-4">
+            {% csrf_token %}
+            <button type="submit"
+                    class="px-6 py-3 bg-red-700 hover:bg-red-600 text-white font-semibold rounded-xl transition-all duration-200">
+                Да, удалить
+            </button>
+            <a href="{% url 'posts:post_detail' post.slug %}"
+               class="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-medium rounded-xl transition-all duration-200">
+                Отмена
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock content %}

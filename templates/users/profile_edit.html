@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Настройки профиля | GameCritic {% endblock title %}
+{% block content %}
+<div class = "max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-10 mt-8"> 
+    <h1 class = "text-3xl font-bod text-slate-900 mb-2">Настройка профиля</h1>
+    <p class = "text-slate-500 mb-8">Обновите вашу личную информацию и аватар</p>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-6"> 
+        {%csrf_token%}
+
+        <div class ="spacw-y-4"> 
+            <h2 class="text-xl font semibold text-slate-800 border-b pb-2">Основные данные</h2>
+            <div> 
+                <label class = "block text-sm font-semibold text-slate-800 border-b pb-2">Имя пользователя (логин)</label>
+                {{u_form.username}}
+                {% if u_form.username.errors} <p class="text-red-500 text-sm mt-1">{{u_form.username.errors.0}}</p>{% endif %}
+            </div>
+            <div>
+                <label class="blok text-sm font-semibold text-slate-700 mb-2">Email</label>
+                {{u_form.email}}
+                {% if u_form.username.errors} <p class="text-red-500 text-sm mt-1">{{u_form.email.errors.0}}</p>{% endif %}
+            </div>
+
+            <div class="space-y-4 pt-4">
+                <h2 class="text-xl font semibold text-slate-800 border-b pb-2">Данные профиля</h2>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Фотография (аватар)</label>
+                    {% if request.user.profile.avatar%}
+                       <img src="{{request.user.profile.avatar.url}}" alt="Текущий автар" class="w-16 h-16 rounded-full object-cover mb-3 border-slate">
+                    {% endif %}
+                    {{p_form.avatar}}
+                </div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2"> О себе (биография)</label>
+                {{p_form.bio }}
+
+            </div>
+        </div>
+
+        <div class="pt-6 border-t border-slate-100 flex items-center justify-between ">
+            <a href="{% url 'users:profile request_user.username %}" class="text-slatee-500 hover:text-slate-800 font-medium">Отмена</a>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition-all">Сохранить изменения</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

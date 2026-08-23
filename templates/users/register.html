@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация{% endblock title %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 p-8 mt-10">
+    <h1 class="text-3xl font-bold text-slate-900 mb-6 text-center">
+        Создать аккаунт
+    </h1>
+    <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        <div class="[&>p]:mb-4 [&>p>label]:block [&>p>label]:text-sm [&>p>label]:font-semibold [&>p>label]:text-slate-700 [&>p>label]:mb-1 [&>p>input]:w-full [&>p>input]:px-4 [&>p>input]:py-2 [&>p>input]:rounded-xl [&>p>input]:border [&>p>input]:border-slate-300 [&>p>input]:focus:border-blue-500 [&>p>input]:focus:ring-2 [&>p>input]:focus:ring-blue-200 [&>p>input]:outline-none [&>ul.errorlist]:text-red-500 [&>ul.errorlist]:text-sm [&>ul.errorlist]:mt-1 [&>span.helptext]:text-xs [&>span.helptext]:text-slate-400 [&>span.helptext]:block [&>span.helptext]:mt-1">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors duration-200">
+            Зарегистрироваться
+        </button>
+    </form>
+</div>
+{% endblock content %}
